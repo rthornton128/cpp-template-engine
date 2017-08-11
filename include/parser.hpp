@@ -1,15 +1,11 @@
-//
-// Created by rthornton on 04/06/17.
-//
+#ifndef CPP_TEMPLATE_ENGINE_PARSER_H
+#define CPP_TEMPLATE_ENGINE_PARSER_H
 
-#ifndef LEARN_CPP_PARSER_H
-#define LEARN_CPP_PARSER_H
+#include "ast.hpp"
+#include "scanner.hpp"
+#include "token.hpp"
 
-#include "ast.h"
-#include "scanner.h"
-#include "token.h"
-
-namespace Lex {
+namespace Template {
     class Parser {
     public:
         Parser();
@@ -31,4 +27,4 @@ namespace Lex {
     };
 }
 
-#endif //LEARN_CPP_PARSER_H
+#endif //CPP_TEMPLATE_ENGINE_PARSER_H

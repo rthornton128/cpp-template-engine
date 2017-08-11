@@ -8,7 +8,7 @@ add_library(value ${value_SOURCES})
 
 # Test program for html templates
 set(template_SOURCES src/ast src/errors src/file src/item src/parser src/position src/scanner src/template src/token)
-include_directories(src)
+include_directories(include)
 add_library(html_template ${template_SOURCES})
 target_link_libraries(html_template value)
 add_executable(test_template tests/test_template)

@@ -1,14 +1,10 @@
-//
-// Created by rthornton on 04/06/17.
-//
-
-#ifndef LEARN_CPP_TOKEN_H
-#define LEARN_CPP_TOKEN_H
+#ifndef CPP_TEMPLATE_ENGINE_TOKEN_H
+#define CPP_TEMPLATE_ENGINE_TOKEN_H
 
 #include <string>
 #include <vector>
 
-namespace Lex {
+namespace Template {
     enum Token {
         TOK_EOF,
         TOK_ERR,
@@ -33,6 +29,6 @@ namespace Lex {
     bool IsOperator(Token);
 }
 
-std::ostream& operator<<(std::ostream& os, const Lex::Token& t);
+std::ostream& operator<<(std::ostream& os, const Template::Token& t);
 
-#endif //LEARN_CPP_TOKEN_H
+#endif //CPP_TEMPLATE_ENGINE_TOKEN_H

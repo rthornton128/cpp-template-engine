@@ -1,17 +1,13 @@
-//
-// Created by rthornton on 04/06/17.
-//
+#ifndef LEARN_CPP_TEMPLATE_ENGINE_FILE_H
+#define LEARN_CPP_TEMPLATE_ENGINE_FILE_H
 
-#ifndef LEARN_CPP_FILE_H
-#define LEARN_CPP_FILE_H
-
-#include "position.h"
-#include "errors.h"
+#include "position.hpp"
+#include "errors.hpp"
 
 #include <string>
 #include <vector>
 
-namespace Lex {
+namespace Template {
     class File {
     public:
         File(std::string name, std::string src) : name(name), src(src) {}
@@ -29,4 +25,4 @@ namespace Lex {
     };
 }
 
-#endif //LEARN_CPP_FILE_H
+#endif //LEARN_CPP_TEMPLATE_ENGINE_FILE_H

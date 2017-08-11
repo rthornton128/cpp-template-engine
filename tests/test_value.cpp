@@ -1,5 +1,6 @@
-#include "../src/value.hpp"
+#include "value.hpp"
 
+using namespace Template;
 using namespace std;
 
 #define assert_out cerr << "assert on line " << __LINE__ << " failed" << endl;

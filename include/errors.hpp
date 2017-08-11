@@ -1,17 +1,13 @@
-//
-// Created by rthornton on 04/06/17.
-//
-
-#ifndef LEARN_CPP_ERRORS_H
-#define LEARN_CPP_ERRORS_H
+#ifndef CPP_TEMPLATE_ENGINE_ERRORS_H
+#define CPP_TEMPLATE_ENGINE_ERRORS_H
 
 #include <ostream>
 #include <string>
 #include <vector>
 
-#include "position.h"
+#include "position.hpp"
 
-namespace Lex {
+namespace Template {
     class Error {
     public:
         Error(Position p, std::string m) : position(p), message(m) {}
@@ -35,7 +31,7 @@ namespace Lex {
     };
 }
 
-std::ostream& operator<<(std::ostream&, const Lex::Error&);
-std::ostream& operator<<(std::ostream&, const Lex::ErrorList&);
+std::ostream& operator<<(std::ostream&, const Template::Error&);
+std::ostream& operator<<(std::ostream&, const Template::ErrorList&);
 
-#endif //LEARN_CPP_ERRORS_H
+#endif //CPP_TEMPLATE_ENGINE_ERRORS_H

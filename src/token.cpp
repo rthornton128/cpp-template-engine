@@ -1,11 +1,12 @@
 //
 // Created by rthornton on 05/06/17.
 //
-#include "token.h"
+#include "token.hpp"
 
-using namespace Lex;
+using namespace std;
+using namespace Template;
 
-std::string tokens[] = {
+string tokens[] = {
     "EOF",
     "error",
     "HTML",
@@ -23,22 +24,22 @@ std::string tokens[] = {
     "}}",
 };
 
-Token Lex::GetToken(std::string lit) {
+Token Template::GetToken(string lit) {
     if (lit == "end") return TOK_END;
     if (lit == "for") return TOK_FOR;
     if (lit == "in") return TOK_IN;
     return TOK_IDENT;
 }
 
-bool Lex::IsKeyword(Token t) {
+bool IsKeyword(Token t) {
     return t > keywords_start && t < keywords_end;
 }
 
-bool Lex::IsOperator(Token t) {
+bool IsOperator(Token t) {
     return t > operators_start && t < operators_end;
 }
 
-std::ostream& operator<<(std::ostream& os, const Lex::Token& t) {
+std::ostream& operator<<(std::ostream& os, const Token& t) {
     os << tokens[t];
     return os;
 }

@@ -1,15 +1,12 @@
-//
-// Created by rthornton on 04/06/17.
-//
-
-#ifndef LEARN_CPP_AST_H
-#define LEARN_CPP_AST_H
+#ifndef CPP_TEMPLATE_ENGINE_AST_H
+#define CPP_TEMPLATE_ENGINE_AST_H
 
 #include <string>
 #include <vector>
+
 #include "value.hpp"
 
-namespace Lex {
+namespace Template {
     class SymTab {
     public:
         explicit SymTab(SymTab* parent = NULL);
@@ -117,4 +114,4 @@ namespace Lex {
     };
 }
 
-#endif //LEARN_CPP_AST_H
+#endif //CPP_TEMPLATE_ENGINE_AST_H

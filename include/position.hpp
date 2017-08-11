@@ -1,14 +1,10 @@
-//
-// Created by rthornton on 04/06/17.
-//
-
-#ifndef LEARN_CPP_POSITION_H
-#define LEARN_CPP_POSITION_H
+#ifndef CPP_TEMPLATE_ENGINE_POSITION_H
+#define CPP_TEMPLATE_ENGINE_POSITION_H
 
 #include <ostream>
 #include <string>
 
-namespace Lex {
+namespace Template {
     class Position {
     public:
         Position(std::string, int, int);
@@ -22,6 +18,6 @@ namespace Lex {
     };
 }
 
-std::ostream& operator<<(std::ostream& os, const Lex::Position& p);
+std::ostream& operator<<(std::ostream& os, const Template::Position& p);
 
-#endif //LEARN_CPP_POSITION_H
+#endif //CPP_TEMPLATE_ENGINE_POSITION_H

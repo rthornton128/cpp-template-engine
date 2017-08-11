@@ -8,6 +8,7 @@
 
 #include "value.hpp"
 
+using namespace Template;
 using namespace std;
 
 Value::Value(const ValueType& t) : _type(t) {

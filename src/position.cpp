@@ -2,9 +2,9 @@
 // Created by rthornton on 04/06/17.
 //
 
-#include "position.h"
+#include "position.hpp"
 
-using namespace Lex;
+using namespace Template;
 using namespace std;
 
 Position::Position(string name, int line, int col) :

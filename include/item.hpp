@@ -1,32 +1,27 @@
-//
-// Created by rthornton on 04/06/17.
-//
+#ifndef CPP_TEMPLATE_ENGINE_ITEM_H
+#define CPP_TEMPLATE_ENGINE_ITEM_H
 
-#ifndef LEARN_CPP_NAMESPACE_H
-#define LEARN_CPP_NAMESPACE_H
-
-#include "token.h"
+#include "token.hpp"
 
 #include <ostream>
 
-namespace Lex {
-
-
+namespace Template {
     class Item {
     public:
         Item();
         Item(Token, std::string, int);
+
         Token Tok();
         std::string Lit();
         int Pos();
+
+        friend std::ostream& operator<<(std::ostream&, Item&);
+
     private:
         Token tok;
         std::string lit;
         int pos;
     };
-
 }
 
-std::ostream& operator<<(std::ostream&, Lex::Item&);
-
-#endif //LEARN_CPP_NAMESPACE_H
+#endif //CPP_TEMPLATE_ENGINE_ITEM_H

@@ -1,13 +1,10 @@
-//
-// Created by rthornton on 04/06/17.
-//
 #include <iostream>
 #include <sstream>
 
-#include "ast.h"
+#include "ast.hpp"
 
 using namespace std;
-using namespace Lex;
+using namespace Template;
 
 string Node::String() const {
     return "Node";

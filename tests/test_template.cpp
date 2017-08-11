@@ -1,10 +1,11 @@
-#include "scanner.h"
-#include "parser.h"
-#include "template.h"
+#include "scanner.hpp"
+#include "parser.hpp"
+#include "template.hpp"
 
 #include <iostream>
 
 using namespace std;
+using namespace Template;
 
 int main(void) {
     string str = "<!doctype html>\n"
@@ -19,7 +20,7 @@ int main(void) {
             "</ul>\n"
             "</body>\n"
             "</html>";
-    Lex::Template t = Lex::Template("html", str);
+    Template::Template t = Template::Template("html", str);
     Value map = Value(Value::mapType);
     map["answer"] = 42;
     //map["pi"] = 3.14;

@@ -2,20 +2,20 @@
 // Created by rthornton on 08/06/17.
 //
 
-#include "template.h"
+#include "template.hpp"
 
 #include <iostream>
 
-using namespace Lex;
+using namespace Template;
 using namespace std;
 
-Template::~Template() {
+Template::Template::~Template() {
     if (tree != NULL) {
         delete tree;
     }
 }
 
-void Template::Execute(ostream& os, string name, Value data) {
+void Template::Template::Execute(ostream& os, string name, Value data) {
     // Find the template matching 'name' and call Render() with 'data' as
     // its value.
     cout << this->name << " vs " << name << endl;
@@ -30,10 +30,9 @@ void Template::Execute(ostream& os, string name, Value data) {
     //}
 }
 
-Template::Template(string name, string src) :
-name(name) {
-    File f = Lex::File(name, src);
-    Parser parser = Lex::Parser();
+Template::Template::Template(string name, string src) : name(name) {
+    File f = File(name, src);
+    Parser parser = Parser();
     tree = parser.Parse(&f);
 
     cout << "parsetree: " << tree->String() << endl;

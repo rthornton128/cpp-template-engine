@@ -1,16 +1,12 @@
-//
-// Created by rthornton on 04/06/17.
-//
+#ifndef CPP_TEMPLATE_ENGINE_SCANNER_H
+#define CPP_TEMPLATE_ENGINE_SCANNER_H
 
-#ifndef LEARN_CPP_SCANNER_H
-#define LEARN_CPP_SCANNER_H
-
-#include "file.h"
-#include "item.h"
+#include "file.hpp"
+#include "item.hpp"
 
 #include <string>
 
-namespace Lex {
+namespace Template {
     enum State {
         State_Html,
         State_Expr,
@@ -35,4 +31,4 @@ namespace Lex {
         File file;
     };
 }
-#endif //LEARN_CPP_SCANNER_H
+#endif //CPP_TEMPLATE_ENGINE_SCANNER_H

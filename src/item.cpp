@@ -1,10 +1,6 @@
-//
-// Created by rthornton on 04/06/17.
-//
+#include "item.hpp"
 
-#include "item.h"
-
-using namespace Lex;
+using namespace Template;
 
 std::ostream& operator<<(std::ostream& os, Item& i) {
     os << "[" << i.Tok();

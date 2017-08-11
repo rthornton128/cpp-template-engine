@@ -2,11 +2,11 @@
 // Created by rthornton on 04/06/17.
 //
 
-#include "scanner.h"
+#include "scanner.hpp"
 
 #include <iostream>
 
-using namespace Lex;
+using namespace Template;
 using namespace std;
 
 /* Utility functions */

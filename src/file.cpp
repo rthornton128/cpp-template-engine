@@ -1,10 +1,6 @@
-//
-// Created by rthornton on 04/06/17.
-//
+#include "file.hpp"
 
-#include "file.h"
-
-using namespace Lex;
+using namespace Template;
 
 void File::AddLine(int pos) {
     lines.push_back(pos);
@@ -31,7 +27,7 @@ Position File::Pos(int pos) {
         line++;
     }
 
-    return Lex::Position(name, line, col);
+    return Position(name, line, col);
 }
 
 std::string File::Source() { return src; }

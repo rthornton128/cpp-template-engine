@@ -1,17 +1,13 @@
-//
-// Created by rthornton on 08/06/17.
-//
+#ifndef CPP_TEMPLATE_ENGINE_TEMPLATE_H
+#define CPP_TEMPLATE_ENGINE_TEMPLATE_H
 
-#ifndef LEARN_CPP_TEMPLATE_H
-#define LEARN_CPP_TEMPLATE_H
-
-#include "errors.h"
-#include "parser.h"
+#include "errors.hpp"
+#include "parser.hpp"
 #include "value.hpp"
 
 #include <ostream>
 
-namespace Lex {
+namespace Template {
     class Template {
     public:
         Template(std::string, std::string);
@@ -27,4 +23,4 @@ namespace Lex {
     };
 }
 
-#endif //LEARN_CPP_TEMPLATE_H
+#endif //CPP_TEMPLATE_ENGINE_TEMPLATE_H

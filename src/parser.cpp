@@ -1,13 +1,9 @@
-//
-// Created by rthornton on 04/06/17.
-//
-
-#include "parser.h"
+#include "parser.hpp"
 
 #include <iostream>
 #include <sstream>
 
-using namespace Lex;
+using namespace Template;
 using namespace std;
 
 Parser::Parser() : file(NULL), scanner(NULL) {
