@@ -3,13 +3,14 @@ project("HTML Template")
 enable_testing()
 
 # Value library
-set(value_SOURCES src/value)
+set(value_SOURCES src/value.cpp include/value.hpp)
 add_library(value ${value_SOURCES})
 
 # Test program for html templates
+set(template_HEADERS include/ast include/errors include/file include/item include/parser include/position include/scanner include/template include/token)
 set(template_SOURCES src/ast src/errors src/file src/item src/parser src/position src/scanner src/template src/token)
 include_directories(include)
-add_library(html_template ${template_SOURCES})
+add_library(html_template ${template_SOURCES} ${template_HEADERS})
 target_link_libraries(html_template value)
 add_executable(test_template tests/test_template)
 target_link_libraries(test_template html_template)
