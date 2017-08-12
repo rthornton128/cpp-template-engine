@@ -10,8 +10,14 @@ string Node::String() const {
     return "Node";
 }
 
-string Node::Render(SymTab stab, const Value &) const {
-    return "Node";
+string Node::Render(SymTab stab, const Value &v) const {
+    return "";
+}
+
+Document::~Document() {
+    for (vector<Node*>::iterator iter = nodes.begin(); iter != nodes.end(); ++iter) {
+        delete *iter;
+    }
 }
 
 void Document::Append(Node *n) {
@@ -45,6 +51,18 @@ string Expression::String() const {
     return "Expression";
 }
 
+/* For */
+For::For(int fr, Node *ea, int in, Node *arr, std::vector<Node *> inner) :
+        fr(fr), each(ea), in(in), array(arr), nodes(inner) {}
+
+For::~For() {
+    delete each;
+    delete array;
+    for (vector<Node*>::iterator iter = nodes.begin(); iter != nodes.end(); ++iter) {
+        delete *iter;
+    }
+}
+
 string For::String() const {
     ostringstream ss;
     for (unsigned int i = 0; i < nodes.size(); i++) {
@@ -54,28 +72,26 @@ string For::String() const {
             "{" + ss.str() + "}";
 }
 
-string For::Render(SymTab stab, const Value &v) const {
+string For::Render(SymTab stab, const Value& v) const {
     ostringstream ss;
-    cout << "for loop" << endl;
-/*
-    string each = this->each->String();
-    stab.Insert(each, Value());
-    string ident = this->array->String();
-    cout << "each:" + this->each->String() + " array:" + this->array->String() << endl;
-    Value array = v;
-    if (ident != ".") {
-        array = v.Fetch(this->array->String());
-    }
-
-    cout << "array => " << array.String() << endl;
-
-    for (Value::ValueIter iter = array.Begin(); iter != array.End(); iter++) {
-        cout << "loop" << endl;
-        stab.Insert(each, iter.Second());
-        for (unsigned int i = 0; i < nodes.size(); i++) {
-            ss << nodes[i]->Render(stab, array);
+    stab.Open();
+    try {
+        for (Value::ValueIter iter = v.Begin(); iter != v.End(); ++iter) {
+            Value tmp;
+            if (iter.Type() == Value::mapType) {
+                tmp = iter.Second();
+            } else {
+                tmp = *iter;
+            }
+            stab.Insert(each->String(), tmp);
+            for (unsigned int i = 0; i < nodes.size(); i++) {
+                ss << nodes[i]->Render(stab, tmp);
+            }
         }
-    }*/
+    } catch (exception&) {
+        /* TODO should handle the error so programmer isn't left twisting in the wind */
+    };
+    stab.Close();
     return ss.str();
 }
 
@@ -83,7 +99,7 @@ string Html::String() const {
     return "Html";
 }
 
-string Html::Render(SymTab, const Value &) const {
+string Html::Render(SymTab stab, const Value &v) const {
     return html;
 }
 
@@ -92,16 +108,14 @@ string Ident::String() const {
 }
 
 string Ident::Render(SymTab stab, const Value& v) const {
-    cout << "ident:" << name << endl;
     Value res = stab.Lookup(name);
-    cout << "check result" << endl;
     if (res == Value()) {
-        cout << "Looks to have been null, try fetch" << endl;
         res = v.At(name);
     }
-    cout << "result" << res.String() << endl;
+    if (res == Value()) {
+        return "";
+    }
     return res.String();
-    return "";
 }
 
 string QualifiedIdent::String() const {
@@ -123,26 +137,14 @@ void SymTab::Open() {
 }
 
 Value SymTab::Lookup(const std::string &ident) {
-    //map<string, Value>::const_iterator iter;
-    cout << "Symtab::Lookup: " << ident << endl;
     Value v;
     try {
-        cout << "lookup: trying" << endl;
         v = table[ident];
-        cout << v.String() << endl;
     } catch(exception& e) {
-        cout << "caught exception" << endl;
         if (parent != NULL) {
-            cout << "looking up parent" << endl;
             parent->Lookup(ident);
         }
     }
-    /*for (iter = table.begin(); iter != table.end(); ++iter) {
-        if (iter->first == ident) {
-            return iter->second;
-        }
-    }*/
-    cout << "return result:" << v.String() << endl;
     return v;
 }
 

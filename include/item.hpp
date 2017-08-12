@@ -15,13 +15,13 @@ namespace Template {
         std::string Lit();
         int Pos();
 
-        friend std::ostream& operator<<(std::ostream&, Item&);
-
     private:
         Token tok;
         std::string lit;
         int pos;
     };
 }
+
+std::ostream& operator<<(std::ostream&, Template::Item&);
 
 #endif //CPP_TEMPLATE_ENGINE_ITEM_H

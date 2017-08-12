@@ -98,7 +98,7 @@ Value& Value::operator[] (const size_t& i) {
 }
 
 /** General / Iterators */
-Value::ValueIter Value::Begin() {
+Value::ValueIter Value::Begin() const {
     switch (_type) {
         case arrType:
             return ValueIter(_vec->begin());
@@ -110,7 +110,7 @@ Value::ValueIter Value::Begin() {
     }
 }
 
-Value::ValueIter Value::End() {
+Value::ValueIter Value::End() const {
     switch (_type) {
         case arrType:
             return ValueIter(_vec->end());
@@ -122,7 +122,7 @@ Value::ValueIter Value::End() {
     }
 }
 
-size_t Value::Length() {
+size_t Value::Length() const {
     switch (_type) {
         case arrType:
             return _vec->size();
@@ -274,25 +274,42 @@ Value& Value::operator=(const int& i) {
         default:
             break;
     }
+
     _type = intType;
     _int = i;
     return *this;
 }
 
 Value& Value::operator=(const double& d) {
-    if (_type != floatType) {
-        throw runtime_error("assignment of int to Value that is not an integer");
+    switch (_type) {
+        case arrType:
+            delete _vec; break;
+        case mapType:
+            delete _map; break;
+        case strType:
+            delete _str; break;
+        default:
+            break;
     }
 
+    _type = floatType;
     _float = d;
     return *this;
 }
 
 Value& Value::operator=(const string& s) {
-    if (_type != strType) {
-        throw runtime_error("assignment of int to Value that is not an integer");
+    switch (_type) {
+        case arrType:
+            delete _vec; break;
+        case mapType:
+            delete _map; break;
+        case strType:
+            delete _str; break;
+        default:
+            break;
     }
-    delete _str;
+
+    _type = strType;
     _str = new string(s);
     return *this;
 }
@@ -306,10 +323,13 @@ Value& Value::operator=(const Value &other) {
     switch (_type) {
         case strType:
             delete _str;
+            break;
         case arrType:
             delete _vec;
+            break;
         case mapType:
             delete _map;
+            break;
         default:
             break;
     }
@@ -317,15 +337,20 @@ Value& Value::operator=(const Value &other) {
     _type = other._type;
     switch (_type) {
         case intType:
-            _int = other._int; break;
+            _int = other._int;
+            break;
         case floatType:
-            _float = other._float; break;
+            _float = other._float;
+            break;
         case strType:
-            _str = new string(*other._str); break;
+            _str = new string(*other._str);
+            break;
         case arrType:
-            _vec = new vector<Value>(*other._vec); break;
+            _vec = new vector<Value>(*other._vec);
+            break;
         case mapType:
-            _map = new map<string,Value>(*other._map); break;
+            _map = new map<string,Value>(*other._map);
+            break;
         default:
             break;
     }

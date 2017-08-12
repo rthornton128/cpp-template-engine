@@ -24,17 +24,19 @@ namespace Template {
 
     class Node {
     public:
+        virtual ~Node() = default;
         virtual std::string String() const = 0;
-        virtual std::string Render(SymTab stab, const Value&) const;
+        virtual std::string Render(SymTab, const Value&) const;
     };
 
     class Document : public Node {
     public:
-        Document() {}
-        ~Document() {} // TODO delete nodes
+        Document() = default;
+        ~Document();
+
         void Append(Node*);
         std::string String() const;
-        std::string Render(SymTab stab, const Value&) const;
+        std::string Render(SymTab, const Value&) const;
 
     private:
         std::vector<Node *> nodes;
@@ -63,9 +65,8 @@ namespace Template {
 
     class For : public Node {
     public:
-        For(int fr, Node *ea, int in, Node *arr, std::vector<Node *> inner) :
-                fr(fr), each(ea), in(in), array(arr), nodes(inner) {}
-        ~For() { delete each; delete array; }
+        For(int fr, Node *ea, int in, Node *arr, std::vector<Node *> inner);
+        ~For();
 
         std::string Render(SymTab stab, const Value&) const;
         std::string String() const;

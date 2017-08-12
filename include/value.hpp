@@ -66,12 +66,12 @@ namespace Template {
         Value& operator[] (const size_t& i);
 
         // General
-        size_t Length();
+        size_t Length() const;
         ValueType Type();
 
         // Iterator for array and map
-        ValueIter Begin();
-        ValueIter End();
+        ValueIter Begin() const;
+        ValueIter End() const;
 
         // Map
         void Insert(const std::string& key, const Value& value);

@@ -25,6 +25,7 @@ Node* Parser::Parse(File* f) {
         }
         static_cast<Document*>(root)->Append(n);
     }
+    delete scanner;
     return root;
 }
 
@@ -69,11 +70,13 @@ Node* Parser::parseFor(int) {
     Node* varIdent = parseQualifiedIdent();
     int in = assert(TOK_IN);
     Node* arrIdent = parseQualifiedIdent();
+
     // parse block
     std::vector<Node *> nodes;
-    while (1) { // TODO this is kind of fugly
+    while (true) {
         Node *node = parseExpression();
         if (dynamic_cast<End *>(node) != NULL) {
+            delete node;
             break;
         }
         nodes.push_back(node);
@@ -92,11 +95,11 @@ Node* Parser::parseIdent() {
 }
 
 Node* Parser::parseQualifiedIdent() {
-    Ident *lhs = static_cast<Ident *>(parseIdent());
+    Ident* lhs = dynamic_cast<Ident*>(parseIdent());
     if (item.Tok() != TOK_DOT) {
         return lhs;
     }
     int dot = assert(TOK_DOT);
-    Ident *rhs = static_cast<Ident *>(parseIdent());
+    Ident* rhs = dynamic_cast<Ident*>(parseIdent());
     return new QualifiedIdent(lhs, dot, rhs);
 }
