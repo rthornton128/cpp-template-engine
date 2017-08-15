@@ -1,6 +1,7 @@
 #include "errors.hpp"
 
 #include <sstream>
+#include <iostream> // temp
 
 using namespace Template;
 using namespace std;
@@ -12,10 +13,12 @@ string Error::String() const {
 }
 
 void ErrorList::Append(Error err) {
+    cout << "new error: " << err << endl;
     errors.push_back(err);
 }
 
 unsigned int ErrorList::NErrors() {
+    cout << "error count:" << errors.size() << endl;
     return static_cast<unsigned int>(errors.size());
 }
 

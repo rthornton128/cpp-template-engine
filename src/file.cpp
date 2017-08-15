@@ -1,5 +1,9 @@
+#include <stdexcept>
+#include <iostream> // temp
+
 #include "file.hpp"
 
+using namespace std;
 using namespace Template;
 
 void File::AddLine(int pos) {
@@ -17,8 +21,9 @@ bool File::HasErrors() { return el.NErrors() > 0; }
 std::string File::Name() { return name; }
 
 Position File::Pos(int pos) {
-    if (pos < 0 || pos >= src.length()) {
-        throw "pos out of bounds";
+    cout << "File::Pos => " << pos << " : " << src.length() << endl;
+    if (pos < 0 || pos > src.length()) {
+        throw runtime_error("pos out of bounds");
     }
 
     int col = pos, line = 1;

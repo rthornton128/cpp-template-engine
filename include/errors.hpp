@@ -20,7 +20,7 @@ namespace Template {
 
     class ErrorList {
     public:
-        ErrorList(int max_errors = 10) : max_errors(max_errors) {}
+        explicit ErrorList(int max_errors = 10) : max_errors(max_errors) {}
         void Append(Error err);
         unsigned int NErrors();
         std::string String() const;

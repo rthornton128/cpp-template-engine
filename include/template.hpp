@@ -13,6 +13,7 @@ namespace Template {
         Template(std::string, std::string);
         ~Template();
 
+        ErrorList& Errors();
         void Execute(std::ostream&, std::string, Value data);
 
     private:

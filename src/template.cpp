@@ -18,8 +18,11 @@ Template::Template::Template(string name, string src) : name(name) {
 }
 
 Template::Template::~Template() {
-    cout << "template::destruct" << endl;
     delete tree;
+}
+
+ErrorList& Template::Template::Errors() {
+    return errors;
 }
 
 void Template::Template::Execute(ostream& os, string name, Value data) {
@@ -29,7 +32,7 @@ void Template::Template::Execute(ostream& os, string name, Value data) {
     for (i = templates.begin(); i != templates.end(); ++i) {
         cout << this->name << " vs " << name << endl;
         if (this->name == name) {
-            cout << "template: match, rendering template: " << name << endl;
+            //cout << "template: match, rendering template: " << name << endl;
             SymTab stab;
             os << tree->Render(stab, data);
             return;

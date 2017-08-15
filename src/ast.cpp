@@ -66,9 +66,9 @@ For::~For() {
 string For::String() const {
     ostringstream ss;
     for (unsigned int i = 0; i < nodes.size(); i++) {
-        ss << nodes.at(i)->String() << (i < nodes.size() ? ", " : "");
+        ss << nodes.at(i)->String() << (i < nodes.size() - 1 ? ", " : "");
     }
-    return "For(" + each->String() + "=>" + array->String() + ")" +
+    return "For(" + each->String() + " => " + array->String() + ")" +
             "{" + ss.str() + "}";
 }
 
@@ -116,6 +116,23 @@ string Ident::Render(SymTab stab, const Value& v) const {
         return "";
     }
     return res.String();
+}
+
+If::If(int posIf, Node* predicate, std::vector<Node*>& inner) : posIf(posIf) {
+    this->predicate = predicate;
+    this->inner = inner;
+}
+
+std::string If::String() const {
+    ostringstream ss;
+    for (unsigned int i = 0; i < inner.size(); i++) {
+        ss << inner[i]->String() << (i < inner.size() - 1 ? ", " : "");
+    }
+    return "If(" + predicate->String() + ") {" + ss.str() + "}";
+}
+
+std::string If::Render(SymTab stab, const Value& v) const {
+
 }
 
 string QualifiedIdent::String() const {

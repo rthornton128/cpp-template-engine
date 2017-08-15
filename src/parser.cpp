@@ -10,20 +10,13 @@ Parser::Parser() : file(NULL), scanner(NULL) {
 }
 
 Node* Parser::Parse(File* f) {
-    Node* root = new Document;
+    Document* root = new Document();
     file = f;
     scanner = new Scanner(*f);
     next();
     while (item.Tok() != TOK_EOF) {
-        Node *n = NULL;
-        switch (item.Tok()) {
-            case TOK_HTML:
-                n = parseHtml();
-                break;
-            default:
-                n = parseExpression();
-        }
-        static_cast<Document*>(root)->Append(n);
+        Node *n = parseExpression();
+        root->Append(n);
     }
     delete scanner;
     return root;
@@ -42,27 +35,36 @@ int Parser::assert(Token t) {
 
 void Parser::next() {
     item = scanner->Scan();
+    //cout << "item: " << item << endl;
 }
 
 Node* Parser::parseEnd(int open) {
     int end = assert(TOK_END);
-    return new End(open, end, assert(TOK_CLOSE_EXPR));
+    return new End(open, end, 0);
 }
 
 Node* Parser::parseExpression() {
+    if (item.Tok() == TOK_HTML) {
+        return parseHtml();
+    }
+
     int open = assert(TOK_OPEN_EXPR);
+    Node* node = NULL;
     switch (item.Tok()) {
         case TOK_END:
-            return parseEnd(open);
+            node = parseEnd(open); break;
+        case TOK_DOT:
         case TOK_IDENT:
-            return parseQualifiedIdent();
+            node = parseQualifiedIdent(); break;
         case TOK_FOR:
             return parseFor(open);
-        case TOK_HTML:
-            return parseHtml();
+        case TOK_IF:
+            return parseIf();
         default:
-            return new Expression(open, assert(TOK_CLOSE_EXPR));
+            break;
     }
+    assert(TOK_CLOSE_EXPR);
+    return node;
 }
 
 Node* Parser::parseFor(int) {
@@ -70,17 +72,10 @@ Node* Parser::parseFor(int) {
     Node* varIdent = parseQualifiedIdent();
     int in = assert(TOK_IN);
     Node* arrIdent = parseQualifiedIdent();
+    assert(TOK_CLOSE_EXPR);
 
-    // parse block
     std::vector<Node *> nodes;
-    while (true) {
-        Node *node = parseExpression();
-        if (dynamic_cast<End *>(node) != NULL) {
-            delete node;
-            break;
-        }
-        nodes.push_back(node);
-    }
+    parseInner(nodes);
     return new For(forp, varIdent, in, arrIdent, nodes);
 }
 
@@ -91,7 +86,20 @@ Node* Parser::parseHtml() {
 
 Node* Parser::parseIdent() {
     std::string lit = item.Lit();
+    if (item.Tok() == TOK_DOT) {
+         return new Ident(assert(TOK_DOT), lit);
+    }
     return new Ident(assert(TOK_IDENT), lit);
+}
+
+Node* Parser::parseIf() {
+    int posIf = assert(TOK_IF);
+    Node* predicate = parseQualifiedIdent();
+    assert(TOK_CLOSE_EXPR);
+
+    std::vector<Node *> nodes;
+    parseInner(nodes);
+    return new If(posIf, predicate, nodes);
 }
 
 Node* Parser::parseQualifiedIdent() {
@@ -102,4 +110,12 @@ Node* Parser::parseQualifiedIdent() {
     int dot = assert(TOK_DOT);
     Ident* rhs = dynamic_cast<Ident*>(parseIdent());
     return new QualifiedIdent(lhs, dot, rhs);
+}
+
+void Parser::parseInner(std::vector<Node*>& nodes) {
+    Node *node = NULL;
+    while (dynamic_cast<End *>(node) == NULL) {
+        node = parseExpression();
+        nodes.push_back(node);
+    }
 }

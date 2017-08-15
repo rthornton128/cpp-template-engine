@@ -18,15 +18,26 @@ int main() {
             "<li>{{ elem }}</li>\n"
             "{{ end }}"
             "</ul>\n"
+            "{{ if answer }}"
+            "<p>Answer is true</p>\n"
+            "{{ if false }}"
+            "<p>This should not show up.</p>\n"
+            "{{ end }}"
+            "{{ end }}"
             "</body>\n"
             "</html>";
     Template::Template t = Template::Template("html", str);
+    if (t.Errors().NErrors()) {
+        cout << t.Errors() << endl;
+        return 1;
+    }
     Value map = Value(Value::mapType);
     map["answer"] = 42;
     map["pi"] = 3.14;
     map["foobar"] = string("baz");
     map["narf"] = "bap";
     map["narf"] = "blarg";
+    map["false"] = false;
     t.Execute(cout, "html", map);
 
     return 0;

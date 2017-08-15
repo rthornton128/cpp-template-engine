@@ -94,11 +94,24 @@ namespace Template {
         Ident(int pos, std::string lit) : pos(pos), name(lit) {}
 
         std::string String() const;
-        std::string Render(SymTab stab, const Value&) const;
+        std::string Render(SymTab stab, const Value& v) const;
 
     private:
         int pos;
         std::string name;
+    };
+
+    class If : public Node {
+    public:
+        If(int posIf, Node*, std::vector<Node*>& inner);
+
+        std::string String() const;
+        std::string Render(SymTab stab, const Value& v) const;
+
+    private:
+        int posIf;
+        Node* predicate;
+        std::vector<Node*> inner;
     };
 
     class QualifiedIdent : public Node {

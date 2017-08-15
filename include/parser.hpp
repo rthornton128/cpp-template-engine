@@ -14,12 +14,16 @@ namespace Template {
     private:
         int assert(Token);
         void next();
+
         Node* parseEnd(int);
         Node* parseExpression();
         Node* parseFor(int);
         Node* parseHtml();
         Node* parseIdent();
+        Node* parseIf();
         Node* parseQualifiedIdent();
+
+        void parseInner(std::vector<Node*>& nodes);
 
         Scanner* scanner;
         File* file;

@@ -14,6 +14,7 @@ namespace Template {
         TOK_FOR,
         TOK_END,
         TOK_IN,
+        TOK_IF,
         keywords_end,
         operators_start,
         TOK_OPEN_COMMENT,
