@@ -7,12 +7,14 @@ using namespace std;
 int main() {
     Value n;
     assert(n.String() == "null");
+    assert(!n.Bool());
     Value n2 = n;
     assert(n2.String() == "null");
 
     Value i(24);
     assert(i.String() == "24");
     assert(i.Int() == 24);
+    assert(i.Bool());
     Value i2 = i;
     assert(i2.Int() == 24);
 
@@ -20,15 +22,22 @@ int main() {
     Value f(3.14);
     assert(f.String() == "3.14");
     assert(f.Float() == 3.14);
+    assert(f.Bool());
     Value f2 = f;
     assert(f2.Float() == 3.14);
+    Value f3(f.Float() - f2.Float());
+    assert(!f3.Bool());
 
     Value s("Hello!");
     assert(s.String() == "Hello!");
+    assert(s.Bool());
     Value s2 = s;
     assert(s2.String() == "Hello!");
+    Value s3("");
+    assert(!s3.Bool());
 
     Value a(Value::arrType);
+    assert(!a.Bool());
     a.Append(42);
     a.Append(f);
     a.Append("myString");
@@ -36,6 +45,7 @@ int main() {
     assert(a[0] == 42);
     assert(a[1] == f2);
     assert(a[2] == "myString");
+    assert(a.Bool());
     Value a2 = a;
     assert(a.Length() == 3);
     assert(a[0] == 42);
@@ -45,11 +55,13 @@ int main() {
     assert(a[0] == 42 && a2[0] == 8);
 
     Value m(Value::mapType);
+    assert(!m.Bool());
     m["test"] = 999;
     m.Insert("int", i);
     m.Insert("float", f);
     m["str"] = s;
     m.Insert("arr", a);
+    assert(m.Bool());
     assert(m.Length() == 5);
     assert(m["test"] == 999);
     assert(m.At("int") == 24);

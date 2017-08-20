@@ -158,8 +158,47 @@ Value& Value::operator[] (const string& key) {
 }
 
 /** Getters */
-int Value::Int() { return _int; }
-double Value::Float() { return _float; }
+
+/**
+ * Bool returns a boolean representation of Value.
+ *
+ * @return
+ *   Strings, arrays and maps will be false when empty. Integers and floating
+ *   point numbers are false when zero.
+ */
+bool Value::Bool() {
+    switch (_type) {
+        case arrType:
+            return !_vec->empty();
+        case intType:
+        case floatType:
+            return _int != 0;
+        case mapType:
+            return !_map->empty();
+        case strType:
+            return !_str->empty();
+        default:
+            return false;
+    }
+}
+
+/**
+ * Int returns an integer representation of Value. If Value is of any type
+ * other than intType then zero is the result.
+ *
+ * @return
+ *    The integer value of this object.
+ */
+int Value::Int() { return (_type == intType ? _int : 0); }
+
+/**
+ * Float returns an double precision, floating point representation of Value.
+ * If Value is of any type other than floatType then zero is the result.
+ *
+ * @return
+ *    The integer value of this object.
+ */
+double Value::Float() { return (_type == floatType ? _float : 0.0); }
 
 std::string Value::String() {
     ostringstream ss;

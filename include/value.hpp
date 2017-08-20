@@ -78,6 +78,7 @@ namespace Template {
         Value& At(const std::string& key) const;
         Value& operator[] (const std::string& key);
 
+        bool Bool();
         int Int();
         double Float();
         std::string String();

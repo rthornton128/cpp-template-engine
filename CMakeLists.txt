@@ -24,7 +24,7 @@ target_link_libraries(test_template html_template)
 add_test(TemplateTest test_template)
 
 # Test program for values
-set(test_SOURCES tests/test_value.cpp tests/assert.hpp tests/test_errors.cpp tests/test_position.cpp)
+set(test_SOURCES tests/test_value.cpp tests/assert.hpp)
 add_executable(test_value ${test_SOURCES})
 target_link_libraries(test_value value)
 add_test(ValueTest test_value)
