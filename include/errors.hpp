@@ -10,7 +10,7 @@
 namespace Template {
     class Error {
     public:
-        Error(Position p, std::string m) : position(p), message(m) {}
+        Error(Position p, std::string m);
         std::string String() const;
 
     private:
@@ -20,8 +20,8 @@ namespace Template {
 
     class ErrorList {
     public:
-        explicit ErrorList(int max_errors = 10) : max_errors(max_errors) {}
-        void Append(Error err);
+        explicit ErrorList(int max_errors = 0);
+        void Append(const Error& err);
         unsigned int NErrors();
         std::string String() const;
 

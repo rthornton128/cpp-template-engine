@@ -1,11 +1,8 @@
 #include "value.hpp"
+#include "assert.hpp"
 
 using namespace Template;
 using namespace std;
-
-#define assert_out cerr << "assert on line " << __LINE__ << " failed" << endl;
-#define assert(x) { if (!(x)) { assert_out } }
-#define assert_exception(x) { try { x; assert_out } catch (exception& e) { }}
 
 int main() {
     Value n;
