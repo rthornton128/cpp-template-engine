@@ -13,6 +13,11 @@ include_directories(include)
 add_library(html_template ${template_SOURCES} ${template_HEADERS})
 target_link_libraries(html_template value)
 
+# Test program for position
+add_executable(test_position tests/test_position.cpp)
+target_link_libraries(test_position html_template)
+add_test(TemplateTest test_position)
+
 # Test program for errors
 add_executable(test_errors tests/test_errors.cpp)
 target_link_libraries(test_errors html_template)
@@ -28,11 +33,3 @@ set(test_SOURCES tests/test_value.cpp tests/assert.hpp)
 add_executable(test_value ${test_SOURCES})
 target_link_libraries(test_value value)
 add_test(ValueTest test_value)
-
-include(FindPkgConfig)
-#set(CMAKE_CXX_STANDARD 11)
-
-#pkg_check_modules(curl libcurl)
-#pkg_check_modules(json jsoncpp)
-#pkg_check_modules(yaml yaml-cpp)
-
