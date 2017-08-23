@@ -23,6 +23,11 @@ add_executable(test_errors tests/test_errors.cpp)
 target_link_libraries(test_errors html_template)
 add_test(TemplateTest test_errors)
 
+# Test program for scanner
+add_executable(test_scanner tests/test_scanner.cpp)
+target_link_libraries(test_scanner html_template)
+add_test(TemplateTest test_scanner)
+
 # Test program for html templates
 add_executable(test_template tests/test_template)
 target_link_libraries(test_template html_template)

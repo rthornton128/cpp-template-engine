@@ -27,7 +27,7 @@ static bool isWhitespace(char ch) {
     return ch == ' ' || ch == '\t' || ch == '\r' || ch == '\n';
 }
 
-Scanner::Scanner(File f) : file(f), off(0), roff(0), state(State_Html), start(0) {
+Scanner::Scanner(File f) : ch(0), file(f), off(0), roff(0), state(State_Html), start(0) {
     src = f.Source();
     next();
 }
@@ -36,13 +36,17 @@ bool Scanner::Done() { return off >= src.length(); }
 
 Item Scanner::Scan() {
     start = off;
-    Token tok;
-    switch (state) {
-        case State_Html:
-            tok = scanHtml();
-            break;
-        default:
-            tok = scanExpr();
+    Token tok = TOK_EOF;
+    if (state == State_Html) {
+        tok = scanHtml();
+    }
+
+    if (start == off) {
+        state = State_Expr;
+    }
+
+    if (state == State_Expr)  {
+        tok = scanExpr();
     }
     std::string lit = "";
     if (tok != TOK_EOF) {
@@ -80,29 +84,34 @@ Token Scanner::scanExpr() {
             return TOK_DOT;
         case '{':
             if (this->ch == '{') {
+                state = State_Expr;
                 next();
                 return TOK_OPEN_EXPR;
             }
+            next();
+            return scanHtml();
         case '}':
             if (this->ch == '}') {
                 state = State_Html;
                 next();
                 return TOK_CLOSE_EXPR;
             }
+            break;
         case 0:
             return TOK_EOF;
         default:
-            return TOK_ERR;
+            if (state == State_Html) {
+                return scanHtml();
+            }
+            break;
     }
+    return TOK_ERR;
 };
 
 Token Scanner::scanHtml() {
-    char ch = this->ch;
-
-    while (ch != '{' && this->ch != '{' && !Done()) {
+    while (ch != '{' && !Done()) {
         next();
     }
-    state = State_Expr;
     return TOK_HTML;
 }
 

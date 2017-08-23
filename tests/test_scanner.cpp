@@ -1,0 +1,68 @@
+#include <iostream>
+
+#include "assert.hpp"
+#include "scanner.hpp"
+
+using namespace std;
+using namespace Template;
+
+void TestScan(Scanner& s, vector<Token>& v) {
+    int i(0);
+    while (!s.Done()) {
+        Item item = s.Scan();
+        //cout << item.Lit() << endl; // TODO this should be tested for
+        if (i < v.size()) {
+            assert_eq(item.Tok(), v[i]);
+        }
+        i++;
+    }
+    assert_eq(i, v.size());
+}
+
+int main() {
+    File f("test0", "");
+    cout << f.Name() << endl;
+    Scanner s(f);
+    vector<Token> v;
+    TestScan(s, v);
+
+    f = File("test1", "<!doctype html><html></html>");
+    cout << f.Name() << endl;
+    s = Scanner(f);
+    v = vector<Token>();
+    v.push_back(TOK_HTML);
+    TestScan(s, v);
+
+    f = File("test2", "{{");
+    cout << f.Name() << endl;
+    s = Scanner(f);
+    v = vector<Token>();
+    v.push_back(TOK_OPEN_EXPR);
+    TestScan(s, v);
+
+    f = File("test3", "asdf{{asdf");
+    cout << f.Name() << endl;
+    s = Scanner(f);
+    v = vector<Token>();
+    v.push_back(TOK_HTML);
+    v.push_back(TOK_OPEN_EXPR);
+    v.push_back(TOK_IDENT);
+    TestScan(s, v);
+
+    f = File("test4", "asdf{asdf");
+    cout << f.Name() << endl;
+    s = Scanner(f);
+    v = vector<Token>();
+    v.push_back(TOK_HTML);
+    v.push_back(TOK_HTML);
+    TestScan(s, v);
+
+    f = File("test5", "{{ asdf }}");
+    cout << f.Name() << endl;
+    s = Scanner(f);
+    v = vector<Token>();
+    v.push_back(TOK_OPEN_EXPR);
+    v.push_back(TOK_IDENT);
+    v.push_back(TOK_CLOSE_EXPR);
+    TestScan(s, v);
+}
