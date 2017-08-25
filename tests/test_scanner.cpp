@@ -65,4 +65,39 @@ int main() {
     v.push_back(TOK_IDENT);
     v.push_back(TOK_CLOSE_EXPR);
     TestScan(s, v);
+
+    f = File("test keywords", "for {{ for in if end }}");
+    cout << f.Name() << endl;
+    s = Scanner(f);
+    v = vector<Token>();
+    v.push_back(TOK_HTML);
+    v.push_back(TOK_OPEN_EXPR);
+    v.push_back(TOK_FOR);
+    v.push_back(TOK_IN);
+    v.push_back(TOK_IF);
+    v.push_back(TOK_END);
+    v.push_back(TOK_CLOSE_EXPR);
+    TestScan(s, v);
+
+    f = File("test identifiers", "{{ . a .b c.d asdf a123 24 #$* }}");
+    cout << f.Name() << endl;
+    s = Scanner(f);
+    v = vector<Token>();
+    v.push_back(TOK_OPEN_EXPR);
+    v.push_back(TOK_DOT);
+    v.push_back(TOK_IDENT);
+    v.push_back(TOK_DOT);
+    v.push_back(TOK_IDENT);
+    v.push_back(TOK_IDENT);
+    v.push_back(TOK_DOT);
+    v.push_back(TOK_IDENT);
+    v.push_back(TOK_IDENT);
+    v.push_back(TOK_IDENT); // a123
+    v.push_back(TOK_ERR); // 2
+    v.push_back(TOK_ERR); // 4
+    v.push_back(TOK_ERR); // #
+    v.push_back(TOK_ERR); // $
+    v.push_back(TOK_ERR); // *
+    v.push_back(TOK_CLOSE_EXPR);
+    TestScan(s, v);
 }
