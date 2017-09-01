@@ -1,6 +1,3 @@
-//
-// Created by rthornton on 05/06/17.
-//
 #include "token.hpp"
 
 using namespace std;
@@ -20,6 +17,7 @@ string tokens[] = {
     "", // operators_start
     "{#",
     "#}",
+    "|",
     ".",
     "{{",
     "}}",

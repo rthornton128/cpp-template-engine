@@ -15,9 +15,10 @@ namespace Template {
         int assert(Token);
         void next();
 
-        Node* parseEnd(int);
+        Node* parseEnd();
         Node* parseExpression();
-        Node* parseFor(int);
+        Node* parseFilters(Ident* ident);
+        Node* parseFor();
         Node* parseHtml();
         Node* parseIdent();
         Node* parseIf();

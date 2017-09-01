@@ -20,6 +20,7 @@ namespace Template {
         TOK_OPEN_COMMENT,
         TOK_CLOSE_COMMENT,
         TOK_DOT,
+        TOK_PIPE,
         TOK_OPEN_EXPR,
         TOK_CLOSE_EXPR,
         operators_end

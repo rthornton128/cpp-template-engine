@@ -27,7 +27,7 @@ int main() {
             "</body>\n"
             "</html>";
     Template::Template t = Template::Template("html", str);
-    if (t.Errors().NErrors()) {
+    if (t.Errors().NErrors() > 0) {
         cout << t.Errors() << endl;
         return 1;
     }

@@ -6,8 +6,7 @@
 using namespace Template;
 using namespace std;
 
-Parser::Parser() : file(NULL), scanner(NULL) {
-}
+Parser::Parser() : file(NULL), scanner(NULL) {}
 
 Node* Parser::Parse(File* f) {
     Document* root = new Document();
@@ -38,9 +37,8 @@ void Parser::next() {
     //cout << "item: " << item << endl;
 }
 
-Node* Parser::parseEnd(int open) {
-    int end = assert(TOK_END);
-    return new End(open, end, 0);
+Node* Parser::parseEnd() {
+    return new End(assert(TOK_END));
 }
 
 Node* Parser::parseExpression() {
@@ -48,16 +46,16 @@ Node* Parser::parseExpression() {
         return parseHtml();
     }
 
-    int open = assert(TOK_OPEN_EXPR);
+    assert(TOK_OPEN_EXPR);
     Node* node = NULL;
     switch (item.Tok()) {
         case TOK_END:
-            node = parseEnd(open); break;
+            node = parseEnd(); break;
         case TOK_DOT:
         case TOK_IDENT:
             node = parseQualifiedIdent(); break;
         case TOK_FOR:
-            return parseFor(open);
+            return parseFor();
         case TOK_IF:
             return parseIf();
         default:
@@ -67,7 +65,15 @@ Node* Parser::parseExpression() {
     return node;
 }
 
-Node* Parser::parseFor(int) {
+Node* Parser::parseFilters(Ident* ident) {
+    while (item.Tok() == TOK_PIPE) {
+        assert(TOK_PIPE);
+        ident->AddFilter(parseIdent());
+    }
+    return ident;
+}
+
+Node* Parser::parseFor() {
     int forp = assert(TOK_FOR);
     Node* varIdent = parseQualifiedIdent();
     int in = assert(TOK_IN);
@@ -105,11 +111,12 @@ Node* Parser::parseIf() {
 Node* Parser::parseQualifiedIdent() {
     Ident* lhs = dynamic_cast<Ident*>(parseIdent());
     if (item.Tok() != TOK_DOT) {
-        return lhs;
+        return parseFilters(lhs);
     }
     int dot = assert(TOK_DOT);
     Ident* rhs = dynamic_cast<Ident*>(parseIdent());
-    return new QualifiedIdent(lhs, dot, rhs);
+    return new QualifiedIdent(lhs, dot,
+      dynamic_cast<Ident*>(parseFilters(rhs)));
 }
 
 void Parser::parseInner(std::vector<Node*>& nodes) {

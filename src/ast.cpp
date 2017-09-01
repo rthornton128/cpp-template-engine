@@ -103,8 +103,8 @@ string Html::Render(SymTab stab, const Value &v) const {
     return html;
 }
 
-string Ident::String() const {
-    return name;
+void Ident::AddFilter(Node* node) {
+    filters.push_back(node);
 }
 
 string Ident::Render(SymTab stab, const Value& v) const {
@@ -116,6 +116,10 @@ string Ident::Render(SymTab stab, const Value& v) const {
         return "";
     }
     return res.String();
+}
+
+string Ident::String() const {
+    return name;
 }
 
 If::If(int posIf, Node* predicate, std::vector<Node*>& inner) : posIf(posIf) {

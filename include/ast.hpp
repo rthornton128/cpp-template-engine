@@ -44,12 +44,11 @@ namespace Template {
 
     class End : public Node {
     public:
-        End(int open, int end, int close) :
-                open(open), end(end), close(close) {}
+        explicit End(int end) : end(end) {}
         std::string String() const;
 
     private:
-        int open, end, close;
+        int end;
     };
 
     class Expression : public Node {
@@ -93,12 +92,14 @@ namespace Template {
     public:
         Ident(int pos, std::string lit) : pos(pos), name(lit) {}
 
-        std::string String() const;
+        void AddFilter(Node* node);
         std::string Render(SymTab stab, const Value& v) const;
+        std::string String() const;
 
     private:
         int pos;
         std::string name;
+        std::vector<Node*> filters;
     };
 
     class If : public Node {
