@@ -14,7 +14,7 @@ void File::AddError(int pos, std::string msg) {
     el.Append(Error(this->Pos(pos), msg));
 }
 
-ErrorList File::Errors() { return el; }
+ErrorList& File::Errors() { return el; }
 
 bool File::HasErrors() { return el.NErrors() > 0; }
 

@@ -1,6 +1,12 @@
 #ifndef HTML_TEMPLATE_ASSERT_H_H
 #define HTML_TEMPLATE_ASSERT_H_H
 
+#include <iostream>
+
+using std::cerr;
+using std::cout;
+using std::endl;
+
 #define assert_out cerr << "assert on line " << __LINE__ << " failed"
 #define assert(x) { if (!(x)) { assert_out << endl; } }
 #define assert_eq(x,y) { if ((x) != (y)) { assert_out << "(EQ) expected: " << (y) << ", got: " << (x) << endl; } }

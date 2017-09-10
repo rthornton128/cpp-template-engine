@@ -1,5 +1,5 @@
-#ifndef LEARN_CPP_TEMPLATE_ENGINE_FILE_H
-#define LEARN_CPP_TEMPLATE_ENGINE_FILE_H
+#ifndef CPP_TEMPLATE_ENGINE_FILE_H
+#define CPP_TEMPLATE_ENGINE_FILE_H
 
 #include "position.hpp"
 #include "errors.hpp"
@@ -13,7 +13,7 @@ namespace Template {
         File(std::string name, std::string src) : name(name), src(src) {}
         void AddLine(int pos);
         void AddError(int pos, std::string msg);
-        ErrorList Errors();
+        ErrorList& Errors();
         bool HasErrors();
         std::string Name();
         Position Pos(int);
@@ -25,4 +25,4 @@ namespace Template {
     };
 }
 
-#endif //LEARN_CPP_TEMPLATE_ENGINE_FILE_H
+#endif //CPP_TEMPLATE_ENGINE_FILE_H

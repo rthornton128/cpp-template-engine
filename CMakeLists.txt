@@ -38,3 +38,8 @@ set(test_SOURCES tests/test_value.cpp tests/assert.hpp)
 add_executable(test_value ${test_SOURCES})
 target_link_libraries(test_value value)
 add_test(ValueTest test_value)
+
+# Test file
+add_executable(test_file tests/test_file.cpp)
+target_link_libraries(test_file html_template)
+add_test(TemplateTest test_file)
