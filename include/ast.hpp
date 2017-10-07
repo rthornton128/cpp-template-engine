@@ -64,7 +64,7 @@ namespace Template {
 
     class For : public Node {
     public:
-        For(int fr, Node *ea, int in, Node *arr, std::vector<Node *> inner);
+        For(int fr, Node *ea, int in, Node *arr, std::vector<Node *>& inner);
         ~For();
 
         std::string Render(SymTab stab, const Value&) const;

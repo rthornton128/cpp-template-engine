@@ -52,7 +52,7 @@ string Expression::String() const {
 }
 
 /* For */
-For::For(int fr, Node *ea, int in, Node *arr, std::vector<Node *> inner) :
+For::For(int fr, Node *ea, int in, Node *arr, std::vector<Node *>& inner) :
         fr(fr), each(ea), in(in), array(arr), nodes(inner) {}
 
 For::~For() {
