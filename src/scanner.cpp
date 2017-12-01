@@ -48,7 +48,7 @@ Item Scanner::Scan() {
     if (state == State_Expr)  {
         tok = scanExpr();
     }
-    std::string lit = "";
+    std::string lit;
     if (tok != TOK_EOF) {
         lit = src.substr(start, off - start);
     }
@@ -98,6 +98,7 @@ Token Scanner::scanExpr() {
             }
             break;
         case '"':
+            next();
             return scanString();
         case 0:
             return TOK_EOF;
@@ -125,9 +126,10 @@ Token Scanner::scanIdent() {
 }
 
 Token Scanner::scanString() {
-    while (ch != '"' || ch != 0) {
+    while (ch != '"' && ch != 0) {
         next();
     }
+    next();
     return TOK_STRING;
 }
 

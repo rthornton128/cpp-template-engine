@@ -3,7 +3,7 @@
 using namespace std;
 using namespace Template;
 
-string tokens[] = {
+char const *tokens[] = {
     "EOF",
     "error",
     "HTML",
@@ -41,6 +41,6 @@ bool IsOperator(Token t) {
 }
 
 std::ostream& operator<<(std::ostream& os, const Token& t) {
-    os << tokens[t];
+    os << string(tokens[t]);
     return os;
 }

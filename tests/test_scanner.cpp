@@ -57,12 +57,21 @@ int main() {
     v.push_back(TOK_HTML);
     TestScan(s, v);
 
-    f = File("test5", "{{ asdf }}");
+    f = File("test identifier", "{{ asdf }}");
     cout << f.Name() << endl;
     s = Scanner(f);
     v = vector<Token>();
     v.push_back(TOK_OPEN_EXPR);
     v.push_back(TOK_IDENT);
+    v.push_back(TOK_CLOSE_EXPR);
+    TestScan(s, v);
+
+    f = File("test string lit", "{{ \"asdf\" }}");
+    cout << f.Name() << endl;
+    s = Scanner(f);
+    v = vector<Token>();
+    v.push_back(TOK_OPEN_EXPR);
+    v.push_back(TOK_STRING);
     v.push_back(TOK_CLOSE_EXPR);
     TestScan(s, v);
 
@@ -98,15 +107,6 @@ int main() {
     v.push_back(TOK_ERR); // #
     v.push_back(TOK_ERR); // $
     v.push_back(TOK_ERR); // *
-    v.push_back(TOK_CLOSE_EXPR);
-    TestScan(s, v);
-
-    f = File("test string", "{{ \"asdf\" }}");
-    cout << f.Name() << endl;
-    s = Scanner(f);
-    v = vector<Token>();
-    v.push_back(TOK_OPEN_EXPR);
-    v.push_back(TOK_STRING);
     v.push_back(TOK_CLOSE_EXPR);
     TestScan(s, v);
 }
