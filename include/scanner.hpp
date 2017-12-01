@@ -14,7 +14,7 @@ namespace Template {
 
     class Scanner {
     public:
-        Scanner(File f);
+        explicit Scanner(File f);
         bool Done();
         Item Scan();
 
@@ -24,6 +24,7 @@ namespace Template {
         Token scanExpr();
         Token scanHtml();
         Token scanIdent();
+        Token scanString();
 
         char ch;
         unsigned int off, roff, state, start;

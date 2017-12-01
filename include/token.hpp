@@ -10,6 +10,7 @@ namespace Template {
         TOK_ERR,
         TOK_HTML,
         TOK_IDENT,
+        TOK_STRING,
         keywords_start,
         TOK_FOR,
         TOK_END,

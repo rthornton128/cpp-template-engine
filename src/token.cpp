@@ -8,6 +8,7 @@ string tokens[] = {
     "error",
     "HTML",
     "identifier",
+    "string",
     "", // keywords_start
     "for",
     "end",

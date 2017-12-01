@@ -97,6 +97,8 @@ Token Scanner::scanExpr() {
                 return TOK_CLOSE_EXPR;
             }
             break;
+        case '"':
+            return scanString();
         case 0:
             return TOK_EOF;
         default:
@@ -120,6 +122,13 @@ Token Scanner::scanIdent() {
         next();
     }
     return GetToken(src.substr(start, off - start));
+}
+
+Token Scanner::scanString() {
+    while (ch != '"' || ch != 0) {
+        next();
+    }
+    return TOK_STRING;
 }
 
 void Scanner::skipWhitespace() {
