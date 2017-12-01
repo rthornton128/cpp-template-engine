@@ -75,7 +75,7 @@ int main() {
     v.push_back(TOK_CLOSE_EXPR);
     TestScan(s, v);
 
-    f = File("test keywords", "for {{ for in if end template }}");
+    f = File("test keywords", "for {{ for in if end define template }}");
     cout << f.Name() << endl;
     s = Scanner(f);
     v = vector<Token>();
@@ -85,6 +85,7 @@ int main() {
     v.push_back(TOK_IN);
     v.push_back(TOK_IF);
     v.push_back(TOK_END);
+    v.push_back(TOK_DEFINE);
     v.push_back(TOK_TEMPLATE);
     v.push_back(TOK_CLOSE_EXPR);
     TestScan(s, v);
