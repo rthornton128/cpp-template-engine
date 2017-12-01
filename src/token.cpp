@@ -14,6 +14,7 @@ char const *tokens[] = {
     "end",
     "in",
     "if",
+    "template",
     "", // keywords_end
     "", // operators_start
     "{#",
@@ -29,6 +30,7 @@ Token Template::GetToken(string lit) {
     if (lit == "for") return TOK_FOR;
     if (lit == "in") return TOK_IN;
     if (lit == "if") return TOK_IF;
+    if (lit == "template") return TOK_TEMPLATE;
     return TOK_IDENT;
 }
 
