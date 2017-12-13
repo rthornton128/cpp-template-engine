@@ -59,6 +59,9 @@ Node* Parser::parseExpression() {
         case TOK_IF:
             return parseIf();
         default:
+            stringstream ss;
+            ss << "unknown or unexpected token: " << item.Lit() << endl;
+            file->AddError(item.Pos(), ss.str());
             break;
     }
     assert(TOK_CLOSE_EXPR);
